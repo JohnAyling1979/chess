@@ -23,6 +23,7 @@ function Pawn({x, y, onDragStart, onDragEnd, position}) {
       src={pawn}
       alt="pawn"
       onDragStart={() => onDragStart(position)}
+      onDragEnd={() => onDragEnd(position)}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
       onDrop={() => onDragEnd(position)}

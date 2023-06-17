@@ -1,10 +1,10 @@
 import Square from "../Square/Square";
 import { useState } from "react";
-import { getPieceFromCode, loadPositionsFromFen } from "../../util/util";
+import { canMoveTo, getPieceFromCode, loadPositionsFromFen } from "../../util/util";
 
 function Board() {
   const [boardState, setBoardState] = useState(loadPositionsFromFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'));
-  const [selectedPosition, setSelectedPosition] = useState(null);
+  const [startPosition, setStartPosition] = useState(null);
 
   const squares = [];
 
@@ -21,27 +21,32 @@ function Board() {
   };
 
   const onDragStart = (startPosition) => {
-    setSelectedPosition(startPosition);
+    setStartPosition(startPosition);
   };
 
   const onDragEnd = (endPosition) => {
-    if (selectedPosition === null) {
+    if (startPosition === null) {
+      return;
+    }
+
+    if (startPosition === endPosition) {
+      setStartPosition(null);
       return;
     }
 
     const newBoardState = [...boardState];
-    newBoardState[endPosition] = newBoardState[selectedPosition];
-    newBoardState[selectedPosition] = null;
+    newBoardState[endPosition] = newBoardState[startPosition];
+    newBoardState[startPosition] = null;
 
     setBoardState(newBoardState);
-    setSelectedPosition(null);
+    setStartPosition(null);
   };
 
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
       const color = (i+j) % 2 === 0 ? 'white' : 'silver';
 
-      squares.push(<Square key={key} color={color} position={key} onDragEnd={onDragEnd} />);
+      squares.push(<Square key={key} color={color} position={key} onDragEnd={onDragEnd} canMoveTo={canMoveTo(startPosition, key, boardState[startPosition], boardState)} />);
       key++;
     }
   }

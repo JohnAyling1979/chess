@@ -1,17 +1,21 @@
 
-function Square({color, position, onDragEnd}) {
+function Square({color, position, onDragEnd, canMoveTo}) {
   const style = {
-    backgroundColor: color,
+    backgroundColor: !canMoveTo ? color : 'lightgreen',
     flex: 1,
     height: '100%',
   };
 
   const onDragOver = (event) => {
-    event.preventDefault()
+    if (canMoveTo) {
+      event.preventDefault()
+    }
   };
 
   const onDragEnter = (event) => {
-    event.preventDefault()
+    if (canMoveTo) {
+      event.preventDefault()
+    }
   };
 
   return (

@@ -63,3 +63,27 @@ export const getPieceFromCode = (code) => {
     return null;
   }
 }
+
+export const canMoveTo = (startPosition, endPosition, piece, board) => {
+  if (piece === null) {
+    return false;
+  }
+
+  if (piece === 1) {
+    const endIsEmptyOrOpponent = board[endPosition] === null || board[endPosition] > 6;
+
+    if (!endIsEmptyOrOpponent) {
+      return false;
+    }
+
+    if (endPosition === startPosition + 8) {
+      return true;
+    }
+
+    if (startPosition > 7 && startPosition < 16) {
+      if (endPosition === startPosition + 16 && board[startPosition + 8] === null) {
+        return true;
+      }
+    }
+  }
+}
