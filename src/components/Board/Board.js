@@ -5,6 +5,7 @@ import { canMoveTo, getPieceFromCode, loadPositionsFromFen } from "../../util/ut
 function Board() {
   const [boardState, setBoardState] = useState(loadPositionsFromFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'));
   const [startPosition, setStartPosition] = useState(null);
+  const [turn, setTurn] = useState('w');
 
   const squares = [];
 
@@ -40,6 +41,7 @@ function Board() {
 
     setBoardState(newBoardState);
     setStartPosition(null);
+    setTurn(turn === 'w' ? 'b' : 'w');
   };
 
   for (let i = 0; i < 8; i++) {
@@ -70,6 +72,7 @@ function Board() {
               position={index}
               onDragStart={onDragStart}
               onDragEnd={onDragEnd}
+              turn={turn}
               x={x}
               y={y}
             />

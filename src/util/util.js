@@ -85,5 +85,21 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         return true;
       }
     }
+  } else if (piece === 7) {
+    const endIsEmptyOrOpponent = board[endPosition] === null || board[endPosition] < 7;
+
+    if (!endIsEmptyOrOpponent) {
+      return false;
+    }
+
+    if (endPosition === startPosition - 8) {
+      return true;
+    }
+
+    if (startPosition > 47) {
+      if (endPosition === startPosition - 16 && board[startPosition - 8] === null) {
+        return true;
+      }
+    }
   }
 }

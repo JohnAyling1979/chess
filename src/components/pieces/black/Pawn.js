@@ -1,6 +1,6 @@
 import pawn from '../../../assets/b_pawn.svg';
 
-function Pawn({x, y, onDragStart, onDragEnd, position}) {
+function Pawn({x, y, onDragStart, onDragEnd, position, turn}) {
   const style = {
     position: 'absolute',
     left: `${x * 100}px`,
@@ -27,7 +27,7 @@ function Pawn({x, y, onDragStart, onDragEnd, position}) {
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
       onDrop={() => onDragEnd(position)}
-      draggable
+      draggable={turn === 'b'}
     />
   );
 }
