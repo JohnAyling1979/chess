@@ -64,6 +64,11 @@ export const getPieceFromCode = (code) => {
   }
 };
 
+const topEdgePositions = [0, 1, 2, 3, 4, 5, 6, 7];
+const bottomEdgePositions = [56, 57, 58, 59, 60, 61, 62, 63];
+const leftEdgePositions = [0, 8, 16, 24, 32, 40, 48, 56];
+const rightEdgePositions = [7, 15, 23, 31, 39, 47, 55, 63];
+
 export const canMoveTo = (startPosition, endPosition, piece, board) => {
   if (piece === null) {
     return false;
@@ -106,6 +111,110 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         return true;
       }
     }
+  } else if (piece === 2) {
+    for (let p = startPosition - 9; p >= 0; p -= 9) {
+      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] > 6) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p >= 0; p -= 7) {
+      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] > 6) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p < 64; p += 7) {
+      if (leftEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] > 6) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p < 64; p += 9) {
+      if (rightEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] > 6) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
   } else if (piece === 7) {
     const isEmpty = board[endPosition] === null;
     const isOpponent = board[endPosition] < 7 && !isEmpty;
@@ -140,6 +249,110 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
       }
 
       if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
+        return true;
+      }
+    }
+  } else if (piece === 8) {
+    for (let p = startPosition - 9; p >= 0; p -= 9) {
+      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] < 7) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p >= 0; p -= 7) {
+      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] < 7) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p < 64; p += 7) {
+      if (leftEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] < 7) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
+        return true;
+      }
+    }
+
+    for (let p = startPosition; p < 64; p += 9) {
+      if (rightEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+        if (endPosition === p && p !== startPosition) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (p === startPosition) {
+        continue;
+      }
+
+      if (board[p] !== null) {
+        if (endPosition === p && board[p] < 7) {
+          return true;
+        }
+
+        break;
+      }
+
+      if (endPosition === p ) {
         return true;
       }
     }

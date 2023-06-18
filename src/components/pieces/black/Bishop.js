@@ -31,6 +31,7 @@ function Bishop({ x, y, position, canMoveTo }) {
       src={bishop}
       alt="bishop"
       onDragStart={() => onDragStart(position)}
+      onDragEnd={() => onDragEnd(position)}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
       onDrop={() => onDragEnd(position)}
