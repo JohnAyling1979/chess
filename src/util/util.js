@@ -123,6 +123,142 @@ const pawnMovement = (
   }
 };
 
+const bishopMovement = (board, startPosition, endPosition, topLeftOffset, topRightOffset, bottomLeftOffset, bottomRightOffset, isWhitePeace) => {
+  for (let p = startPosition; p >= 0; p += topLeftOffset) {
+    const isEmpty = board[p] === null;
+    let isEnemy = board[p] > 6 && !isEmpty;
+
+    if (isWhitePeace) {
+      isEnemy = board[p] < 7 && !isEmpty;
+    }
+
+    if (leftEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+      if (endPosition === p && p !== startPosition && (isEmpty || isEnemy)) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (p === startPosition) {
+      continue;
+    }
+
+    if (board[p] !== null) {
+      if (endPosition === p && isEnemy) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (endPosition === p) {
+      return true;
+    }
+  }
+
+  for (let p = startPosition; p >= 0; p += topRightOffset) {
+    const isEmpty = board[p] === null;
+    let isEnemy = board[p] > 6 && !isEmpty;
+
+    if (isWhitePeace) {
+      isEnemy = board[p] < 7 && !isEmpty;
+    }
+
+    if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
+      if (endPosition === p && p !== startPosition && (board[p] === null || isEnemy)) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (p === startPosition) {
+      continue;
+    }
+
+    if (board[p] !== null) {
+      if (endPosition === p && isEnemy) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (endPosition === p) {
+      return true;
+    }
+  }
+
+  for (let p = startPosition; p < 64; p += bottomLeftOffset) {
+    const isEmpty = board[p] === null;
+    let isEnemy = board[p] > 6 && !isEmpty;
+
+    if (isWhitePeace) {
+      isEnemy = board[p] < 7 && !isEmpty;
+    }
+
+    if (leftEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+      if (endPosition === p && p !== startPosition && (board[p] === null || isEnemy)) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (p === startPosition) {
+      continue;
+    }
+
+    if (board[p] !== null) {
+      if (endPosition === p && isEnemy) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (endPosition === p) {
+      return true;
+    }
+  }
+
+  for (let p = startPosition; p < 64; p += bottomRightOffset) {
+    const isEmpty = board[p] === null;
+    let isEnemy = board[p] > 6 && !isEmpty;
+
+    if (isWhitePeace) {
+      isEnemy = board[p] < 7 && !isEmpty;
+    }
+
+    if (rightEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
+      if (endPosition === p && p !== startPosition && (board[p] === null || isEnemy)) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (p === startPosition) {
+      continue;
+    }
+
+    if (board[p] !== null) {
+      if (endPosition === p && isEnemy) {
+        return true;
+      }
+
+      break;
+    }
+
+    if (endPosition === p) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 export const canMoveTo = (startPosition, endPosition, piece, board) => {
   if (piece === null) {
     return false;
@@ -131,215 +267,11 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
   if (piece === 1) {
     return pawnMovement(board, 8, 16, 7, 9, 7, 16, startPosition, endPosition, false);
   } else if (piece === 2) {
-    for (let p = startPosition - 9; p >= 0; p -= 9) {
-      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] > 6) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p >= 0; p -= 7) {
-      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] > 6) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p < 64; p += 7) {
-      if (leftEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] > 6) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p < 64; p += 9) {
-      if (rightEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] > 6) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
+    return bishopMovement(board, startPosition, endPosition, -9, -7, 7, 9, false);
   } else if (piece === 7) {
     return pawnMovement(board, -8, -16, -9, -7, 47, 56, startPosition, endPosition, true);
   } else if (piece === 8) {
-    for (let p = startPosition - 9; p >= 0; p -= 9) {
-      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] < 7) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p >= 0; p -= 7) {
-      if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] < 7) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p < 64; p += 7) {
-      if (leftEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] < 7) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
-
-    for (let p = startPosition; p < 64; p += 9) {
-      if (rightEdgePositions.includes(p) || bottomEdgePositions.includes(p)) {
-        if (endPosition === p && p !== startPosition) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (p === startPosition) {
-        continue;
-      }
-
-      if (board[p] !== null) {
-        if (endPosition === p && board[p] < 7) {
-          return true;
-        }
-
-        break;
-      }
-
-      if (endPosition === p) {
-        return true;
-      }
-    }
+    return bishopMovement(board, startPosition, endPosition, -9, -7, 7, 9, true);
   }
 
   return false;
