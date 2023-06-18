@@ -13,8 +13,6 @@ function Board() {
   const [startPosition, setStartPosition] = useState(null);
   const [turn, setTurn] = useState('w');
 
-  const squares = [];
-
   const style = {
     display: 'grid',
     gridTemplateColumns: 'repeat(8, 100px)',
@@ -45,10 +43,19 @@ function Board() {
 
     setBoardState(newBoardState);
     setStartPosition(null);
-    setTurn(turn === 'w' ? 'b' : 'w');
+
+    if (!newBoardState.includes(12)) {
+      setTurn('B');
+    } else if (!newBoardState.includes(6)) {
+      setTurn('W');
+    } else {
+      setTurn(previousTurn => previousTurn === 'w' ? 'b' : 'w');
+    }
   };
 
   let key = 0;
+  const squares = [];
+
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
       const color = (i + j) % 2 === 0 ? 'white' : 'silver';
@@ -102,6 +109,10 @@ function Board() {
           />
         );
       })}
+      {turn === 'b' && <div>Blacks turn</div>}
+      {turn === 'w' && <div>Whites turn</div>}
+      {turn === 'W' && <div>White Wins</div>}
+      {turn === 'B' && <div>Black Wins</div>}
     </div>
   );
 }
