@@ -69,48 +69,67 @@ const bottomEdgePositions = [56, 57, 58, 59, 60, 61, 62, 63];
 const leftEdgePositions = [0, 8, 16, 24, 32, 40, 48, 56];
 const rightEdgePositions = [7, 15, 23, 31, 39, 47, 55, 63];
 
+const pawnMovement = (
+  board,
+  firstOffest,
+  secondOffset,
+  leftOffset,
+  rightOffset,
+  rowStart,
+  rowEnd,
+  startPosition,
+  endPosition,
+  isWhitePeace,
+) => {
+  const isEmpty = board[endPosition] === null;
+  let isOpponent = board[endPosition] > 6 && !isEmpty;
+
+  if (isWhitePeace) {
+    isOpponent = board[endPosition] < 7 && !isEmpty;
+  }
+
+  if (!(isEmpty || isOpponent)) {
+    return false;
+  }
+
+  if (endPosition === startPosition + firstOffest && isEmpty) {
+    return true;
+  }
+
+  if (startPosition > rowStart && startPosition < rowEnd && isEmpty) {
+    const firstSquareIsEmpty = board[startPosition + firstOffest] === null;
+
+    if (endPosition === startPosition + secondOffset && firstSquareIsEmpty) {
+      return true;
+    }
+  }
+
+  if (isOpponent) {
+    const column = startPosition % 8;
+    const isLeftCapture = endPosition === startPosition + leftOffset;
+    const isRightCapture = endPosition === startPosition + rightOffset;
+
+    if (column === 0 && isRightCapture) {
+      return true;
+    }
+
+    if (column === 7 && isLeftCapture) {
+      return true;
+    }
+
+    if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
+      return true;
+    }
+  }
+};
+
 export const canMoveTo = (startPosition, endPosition, piece, board) => {
   if (piece === null) {
     return false;
   }
 
   if (piece === 1) {
-    const isEmpty = board[endPosition] === null;
-    const isOpponent = board[endPosition] > 6 && !isEmpty;
-
-    if (!(isEmpty || isOpponent)) {
-      return false;
-    }
-
-    if (endPosition === startPosition + 8 && isEmpty) {
-      return true;
-    }
-
-    if (startPosition > 7 && startPosition < 16 && isEmpty) {
-      const firstSquareIsEmpty = board[startPosition + 8] === null;
-
-      if (endPosition === startPosition + 16 && firstSquareIsEmpty) {
-        return true;
-      }
-    }
-
-    if (isOpponent) {
-      const column = startPosition % 8;
-      const isLeftCapture = endPosition === startPosition + 7;
-      const isRightCapture = endPosition === startPosition + 9;
-
-      if (column === 0 && isRightCapture) {
-        return true;
-      }
-
-      if (column === 7 && isLeftCapture) {
-        return true;
-      }
-
-      if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
-        return true;
-      }
-    }
+    return pawnMovement(board, 8, 16, 7, 9, 7, 16, startPosition, endPosition, false);
   } else if (piece === 2) {
     for (let p = startPosition - 9; p >= 0; p -= 9) {
       if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
@@ -133,7 +152,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -159,7 +178,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -185,7 +204,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -211,47 +230,12 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
   } else if (piece === 7) {
-    const isEmpty = board[endPosition] === null;
-    const isOpponent = board[endPosition] < 7 && !isEmpty;
-
-    if (!(isEmpty || isOpponent)) {
-      return false;
-    }
-
-    if (endPosition === startPosition - 8 && isEmpty) {
-      return true;
-    }
-
-    if (startPosition > 47 && startPosition < 56 && isEmpty) {
-      const firstSquareIsEmpty = board[startPosition - 8] === null;
-
-      if (endPosition === startPosition - 16 && firstSquareIsEmpty) {
-        return true;
-      }
-    }
-
-    if (isOpponent) {
-      const column = startPosition % 8;
-      const isLeftCapture = endPosition === startPosition - 9;
-      const isRightCapture = endPosition === startPosition - 7;
-
-      if (column === 0 && isRightCapture) {
-        return true;
-      }
-
-      if (column === 7 && isLeftCapture) {
-        return true;
-      }
-
-      if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
-        return true;
-      }
-    }
+    return pawnMovement(board, -8, -16, -9, -7, 47, 56, startPosition, endPosition, true);
   } else if (piece === 8) {
     for (let p = startPosition - 9; p >= 0; p -= 9) {
       if (rightEdgePositions.includes(p) || topEdgePositions.includes(p)) {
@@ -274,7 +258,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -300,7 +284,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -326,7 +310,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }
@@ -352,7 +336,7 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
         break;
       }
 
-      if (endPosition === p ) {
+      if (endPosition === p) {
         return true;
       }
     }

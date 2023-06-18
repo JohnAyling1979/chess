@@ -29,7 +29,9 @@ function Square({ color, position, canMoveTo }) {
       onDrop={() => onDragEnd(position)}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
-    >{position}</div>
+    >
+      {position}
+    </div>
   );
 }
 
