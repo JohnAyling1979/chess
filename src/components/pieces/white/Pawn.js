@@ -1,6 +1,6 @@
 import pawn from '../../../assets/w_pawn.svg';
 
-function Pawn({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
+function Pawn({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
   const style = {
     position: 'absolute',
     left: `${x * 100}px`,
@@ -11,13 +11,13 @@ function Pawn({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
 
   const onDragOver = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
   const onDragEnter = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 

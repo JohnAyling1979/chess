@@ -1,6 +1,6 @@
 import knight from '../../../assets/w_knight.svg';
 
-function Knight({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
+function Knight({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
   const style = {
     position: 'absolute',
     left: `${x * 100}px`,
@@ -11,26 +11,28 @@ function Knight({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
 
   const onDragOver = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
   const onDragEnter = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
-  return <img
-    style={style}
-    src={knight}
-    alt="knight"
-    onDragStart={() => onDragStart(position)}
-    onDragOver={onDragOver}
-    onDragEnter={onDragEnter}
-    onDrop={() => onDragEnd(position)}
-    draggable={turn === 'w'}
-    />;
+  return (
+    <img
+      style={style}
+      src={knight}
+      alt="knight"
+      onDragStart={() => onDragStart(position)}
+      onDragOver={onDragOver}
+      onDragEnter={onDragEnter}
+      onDrop={() => onDragEnd(position)}
+      draggable={turn === 'w'}
+    />
+  );
 }
 
 export default Knight;

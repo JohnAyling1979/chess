@@ -1,6 +1,6 @@
 import bishop from '../../../assets/b_bishop.svg';
 
-function Bishop({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
+function Bishop({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
   const style = {
     position: 'absolute',
     left: `${x * 100}px`,
@@ -11,26 +11,28 @@ function Bishop({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
 
   const onDragOver = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
   const onDragEnter = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
-  return <img
-    style={style}
-    src={bishop}
-    alt="bishop"
-    onDragStart={() => onDragStart(position)}
-    onDragOver={onDragOver}
-    onDragEnter={onDragEnter}
-    onDrop={() => onDragEnd(position)}
-    draggable={turn === 'b'}
-    />;
+  return (
+    <img
+      style={style}
+      src={bishop}
+      alt="bishop"
+      onDragStart={() => onDragStart(position)}
+      onDragOver={onDragOver}
+      onDragEnter={onDragEnter}
+      onDrop={() => onDragEnd(position)}
+      draggable={turn === 'b'}
+    />
+  );
 }
 
 export default Bishop;

@@ -1,16 +1,16 @@
-import BlackPawn from "../components/pieces/black/Pawn";
-import BlackBishop from "../components/pieces/black/Bishop";
-import BlackKnight from "../components/pieces/black/Knight";
-import BlackRook from "../components/pieces/black/Rook";
-import BlackQueen from "../components/pieces/black/Queen";
-import BlackKing from "../components/pieces/black/King";
-import WhitePawn from "../components/pieces/white/Pawn";
-import WhiteBishop from "../components/pieces/white/Bishop";
-import WhiteKnight from "../components/pieces/white/Knight";
-import WhiteRook from "../components/pieces/white/Rook";
-import WhiteQueen from "../components/pieces/white/Queen";
-import WhiteKing from "../components/pieces/white/King";
-import { PIECES } from "../constans";
+import BlackPawn from '../components/pieces/black/Pawn';
+import BlackBishop from '../components/pieces/black/Bishop';
+import BlackKnight from '../components/pieces/black/Knight';
+import BlackRook from '../components/pieces/black/Rook';
+import BlackQueen from '../components/pieces/black/Queen';
+import BlackKing from '../components/pieces/black/King';
+import WhitePawn from '../components/pieces/white/Pawn';
+import WhiteBishop from '../components/pieces/white/Bishop';
+import WhiteKnight from '../components/pieces/white/Knight';
+import WhiteRook from '../components/pieces/white/Rook';
+import WhiteQueen from '../components/pieces/white/Queen';
+import WhiteKing from '../components/pieces/white/King';
+import { PIECES } from '../constans';
 
 export const loadPositionsFromFen = (fen) => {
   const positions = [];
@@ -32,7 +32,7 @@ export const loadPositionsFromFen = (fen) => {
   });
 
   return positions;
-}
+};
 
 export const getPieceFromCode = (code) => {
   if (code === 1) {
@@ -62,7 +62,7 @@ export const getPieceFromCode = (code) => {
   } else {
     return null;
   }
-}
+};
 
 export const canMoveTo = (startPosition, endPosition, piece, board) => {
   if (piece === null) {
@@ -146,4 +146,4 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
   }
 
   return false;
-}
+};

@@ -1,6 +1,6 @@
 import pawn from '../../../assets/b_pawn.svg';
 
-function Pawn({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
+function Pawn({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
   const style = {
     position: 'absolute',
     left: `${x * 100}px`,
@@ -11,17 +11,16 @@ function Pawn({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
 
   const onDragOver = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
 
   const onDragEnter = (event) => {
     if (canMoveTo) {
-      event.preventDefault()
+      event.preventDefault();
     }
   };
-  if (position === 25)
-    console.log('p', canMoveTo, position)
+
   return (
     <img
       style={style}
@@ -31,7 +30,7 @@ function Pawn({x, y, onDragStart, onDragEnd, position, turn, canMoveTo}) {
       onDragEnd={() => onDragEnd(position)}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}
-      onDrop={() =>  onDragEnd(position)}
+      onDrop={() => onDragEnd(position)}
       draggable={turn === 'b'}
     />
   );
