@@ -1,58 +1,14 @@
 import Square from '../Square/Square';
-import { useState } from 'react';
-import {
-  canMoveTo,
-  getPieceFromCode,
-  loadPositionsFromFen,
-} from '../../util/util';
+import { canMoveTo, getPieceFromCode } from '../../util/util';
 
-function Board() {
-  const [boardState, setBoardState] = useState(
-    loadPositionsFromFen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR')
-  );
-  const [startPosition, setStartPosition] = useState(null);
-  const [turn, setTurn] = useState('w');
+const boardStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(8, 100px)',
+  gridTemplateRows: 'repeat(8, 100px)',
+  position: 'relative',
+};
 
-  const style = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(8, 100px)',
-    gridTemplateRows: 'repeat(8, 100px)',
-    margin: 'auto',
-    width: '800px',
-    marginTop: '50px',
-    position: 'relative',
-  };
-
-  const onDragStart = (startPosition) => {
-    setStartPosition(startPosition);
-  };
-
-  const onDragEnd = (endPosition) => {
-    if (startPosition === null) {
-      return;
-    }
-
-    if (startPosition === endPosition) {
-      setStartPosition(null);
-      return;
-    }
-
-    const newBoardState = [...boardState];
-    newBoardState[endPosition] = newBoardState[startPosition];
-    newBoardState[startPosition] = null;
-
-    setBoardState(newBoardState);
-    setStartPosition(null);
-
-    if (!newBoardState.includes(12)) {
-      setTurn('B');
-    } else if (!newBoardState.includes(6)) {
-      setTurn('W');
-    } else {
-      setTurn(previousTurn => previousTurn === 'w' ? 'b' : 'w');
-    }
-  };
-
+function Board({ boardState, startPosition, turn, onDragStart, onDragEnd }) {
   let key = 0;
   const squares = [];
 
@@ -79,7 +35,7 @@ function Board() {
   }
 
   return (
-    <div style={style}>
+    <div style={boardStyle}>
       {squares}
       {boardState.map((piece, index) => {
         if (piece === null) {
@@ -109,10 +65,6 @@ function Board() {
           />
         );
       })}
-      {turn === 'b' && <div>Blacks turn</div>}
-      {turn === 'w' && <div>Whites turn</div>}
-      {turn === 'W' && <div>White Wins</div>}
-      {turn === 'B' && <div>Black Wins</div>}
     </div>
   );
 }
