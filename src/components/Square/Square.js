@@ -1,9 +1,14 @@
-function Square({ color, position, onDragEnd, canMoveTo }) {
-  const style = {
-    backgroundColor: !canMoveTo ? color : 'lightgreen',
-    flex: 1,
-    height: '100%',
-  };
+import { useContext } from 'react';
+import { AppContext } from '../Context/AppContext';
+
+const style = (color, canMoveTo) => ({
+  backgroundColor: !canMoveTo ? color : 'lightgreen',
+  flex: 1,
+  height: '100%',
+});
+
+function Square({ color, position, canMoveTo }) {
+  const { onDragEnd } = useContext(AppContext);
 
   const onDragOver = (event) => {
     if (canMoveTo) {
@@ -19,7 +24,7 @@ function Square({ color, position, onDragEnd, canMoveTo }) {
 
   return (
     <div
-      style={style}
+      style={style(color, canMoveTo)}
       onDrop={() => onDragEnd(position)}
       onDragOver={onDragOver}
       onDragEnter={onDragEnter}

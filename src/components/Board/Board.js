@@ -1,5 +1,7 @@
 import Square from '../Square/Square';
 import { canMoveTo, getPieceFromCode } from '../../util/util';
+import { useContext } from 'react';
+import { AppContext } from '../Context/AppContext';
 
 const boardStyle = {
   display: 'grid',
@@ -8,61 +10,32 @@ const boardStyle = {
   position: 'relative',
 };
 
-function Board({ boardState, startPosition, turn, onDragStart, onDragEnd }) {
-  let key = 0;
-  const squares = [];
-
-  for (let i = 0; i < 8; i++) {
-    for (let j = 0; j < 8; j++) {
-      const color = (i + j) % 2 === 0 ? 'white' : 'silver';
-
-      squares.push(
-        <Square
-          key={key}
-          color={color}
-          position={key}
-          onDragEnd={onDragEnd}
-          canMoveTo={canMoveTo(
-            startPosition,
-            key,
-            boardState[startPosition],
-            boardState
-          )}
-        />
-      );
-      key++;
-    }
-  }
+function Board() {
+  const { boardState, startPosition } = useContext(AppContext);
 
   return (
     <div style={boardStyle}>
-      {squares}
       {boardState.map((piece, index) => {
-        if (piece === null) {
-          return null;
-        }
-
         const x = index % 8;
         const y = Math.floor(index / 8);
 
+        const color = (x + y) % 2 === 0 ? 'white' : 'silver';
+
         const Piece = getPieceFromCode(piece);
+        const pieceCanMoveTo = canMoveTo(
+          startPosition,
+          index,
+          boardState[startPosition],
+          boardState
+        );
 
         return (
-          <Piece
-            key={index}
-            position={index}
-            onDragStart={onDragStart}
-            onDragEnd={onDragEnd}
-            turn={turn}
-            canMoveTo={canMoveTo(
-              startPosition,
-              index,
-              boardState[startPosition],
-              boardState
+          <div key={index}>
+            <Square color={color} position={index} canMoveTo={pieceCanMoveTo} />
+            {Piece && (
+              <Piece position={index} canMoveTo={pieceCanMoveTo} x={x} y={y} />
             )}
-            x={x}
-            y={y}
-          />
+          </div>
         );
       })}
     </div>

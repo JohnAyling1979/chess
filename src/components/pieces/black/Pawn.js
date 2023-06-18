@@ -1,13 +1,17 @@
+import { useContext } from 'react';
 import pawn from '../../../assets/b_pawn.svg';
+import { AppContext } from '../../Context/AppContext';
 
-function Pawn({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
-  const style = {
-    position: 'absolute',
-    left: `${x * 100}px`,
-    top: `${y * 100}px`,
-    width: '100px',
-    height: '100px',
-  };
+const style = (x, y) => ({
+  position: 'absolute',
+  left: `${x * 100}px`,
+  top: `${y * 100}px`,
+  width: '100px',
+  height: '100px',
+});
+
+function Pawn({ x, y, position, canMoveTo }) {
+  const { onDragStart, onDragEnd, turn } = useContext(AppContext);
 
   const onDragOver = (event) => {
     if (canMoveTo) {
@@ -23,7 +27,7 @@ function Pawn({ x, y, onDragStart, onDragEnd, position, turn, canMoveTo }) {
 
   return (
     <img
-      style={style}
+      style={style(x, y)}
       src={pawn}
       alt="pawn"
       onDragStart={() => onDragStart(position)}

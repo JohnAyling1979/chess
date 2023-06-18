@@ -1,9 +1,14 @@
+import { useContext } from 'react';
+import { AppContext } from '../Context/AppContext';
+
 const textSectionStyle = {
   textAlign: 'center',
   marginTop: '20px',
 };
 
-function TextSection({ turn }) {
+function TextSection() {
+  const { turn } = useContext(AppContext);
+
   return (
     <div style={textSectionStyle}>
       {turn === 'b' && <div>Blacks turn</div>}
