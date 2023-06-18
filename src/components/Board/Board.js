@@ -9,8 +9,6 @@ function Board() {
 
   const squares = [];
 
-  let key = 0;
-
   const style = {
     display: 'grid',
     gridTemplateColumns: 'repeat(8, 100px)',
@@ -44,6 +42,7 @@ function Board() {
     setTurn(turn === 'w' ? 'b' : 'w');
   };
 
+  let key = 0;
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
       const color = (i+j) % 2 === 0 ? 'white' : 'silver';
@@ -73,6 +72,7 @@ function Board() {
               onDragStart={onDragStart}
               onDragEnd={onDragEnd}
               turn={turn}
+              canMoveTo={canMoveTo(startPosition, index, boardState[startPosition], boardState)}
               x={x}
               y={y}
             />

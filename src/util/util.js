@@ -70,36 +70,80 @@ export const canMoveTo = (startPosition, endPosition, piece, board) => {
   }
 
   if (piece === 1) {
-    const endIsEmptyOrOpponent = board[endPosition] === null || board[endPosition] > 6;
+    const isEmpty = board[endPosition] === null;
+    const isOpponent = board[endPosition] > 6 && !isEmpty;
 
-    if (!endIsEmptyOrOpponent) {
+    if (!(isEmpty || isOpponent)) {
       return false;
     }
 
-    if (endPosition === startPosition + 8) {
+    if (endPosition === startPosition + 8 && isEmpty) {
       return true;
     }
 
-    if (startPosition > 7 && startPosition < 16) {
-      if (endPosition === startPosition + 16 && board[startPosition + 8] === null) {
+    if (startPosition > 7 && startPosition < 16 && isEmpty) {
+      const firstSquareIsEmpty = board[startPosition + 8] === null;
+
+      if (endPosition === startPosition + 16 && firstSquareIsEmpty) {
+        return true;
+      }
+    }
+
+    if (isOpponent) {
+      const column = startPosition % 8;
+      const isLeftCapture = endPosition === startPosition + 7;
+      const isRightCapture = endPosition === startPosition + 9;
+
+      if (column === 0 && isRightCapture) {
+        return true;
+      }
+
+      if (column === 7 && isLeftCapture) {
+        return true;
+      }
+
+      if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
         return true;
       }
     }
   } else if (piece === 7) {
-    const endIsEmptyOrOpponent = board[endPosition] === null || board[endPosition] < 7;
+    const isEmpty = board[endPosition] === null;
+    const isOpponent = board[endPosition] < 7 && !isEmpty;
 
-    if (!endIsEmptyOrOpponent) {
+    if (!(isEmpty || isOpponent)) {
       return false;
     }
 
-    if (endPosition === startPosition - 8) {
+    if (endPosition === startPosition - 8 && isEmpty) {
       return true;
     }
 
-    if (startPosition > 47) {
-      if (endPosition === startPosition - 16 && board[startPosition - 8] === null) {
+    if (startPosition > 47 && startPosition < 56 && isEmpty) {
+      const firstSquareIsEmpty = board[startPosition - 8] === null;
+
+      if (endPosition === startPosition - 16 && firstSquareIsEmpty) {
+        return true;
+      }
+    }
+
+    if (isOpponent) {
+      const column = startPosition % 8;
+      const isLeftCapture = endPosition === startPosition - 9;
+      const isRightCapture = endPosition === startPosition - 7;
+
+      if (column === 0 && isRightCapture) {
+        return true;
+      }
+
+      if (column === 7 && isLeftCapture) {
+        return true;
+      }
+
+      if (column > 0 && column < 7 && (isRightCapture || isLeftCapture)) {
         return true;
       }
     }
   }
+
+  return false;
 }

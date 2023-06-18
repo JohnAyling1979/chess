@@ -17,6 +17,8 @@ function Square({color, position, onDragEnd, canMoveTo}) {
       event.preventDefault()
     }
   };
+  if (position === 25)
+    console.log('sq', canMoveTo, position)
 
   return (
     <div
